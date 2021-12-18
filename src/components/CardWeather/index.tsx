@@ -1,6 +1,6 @@
 import { Container, Temperature, Title } from "./styles";
 import Image from 'next/image'
-import img from './../../../../public/img/Clear.png'
+import img from './../../../public/img/Clear.png'
 
 type CardWeatherProps = {
   title: string
@@ -8,7 +8,7 @@ type CardWeatherProps = {
   min: string
 }
 
-export default function CardWeather({title, max, min}: CardWeatherProps) {
+export function CardWeather({title, max, min}: CardWeatherProps) {
   return (
     <Container>
       <Title>
