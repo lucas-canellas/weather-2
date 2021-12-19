@@ -1,4 +1,4 @@
-import { Container, Temperature, Title } from "./styles";
+import * as S from "./styles";
 import Image from 'next/image'
 import img from './../../../public/img/Clear.png'
 
@@ -10,21 +10,21 @@ type CardWeatherProps = {
 
 export function CardWeather({title, max, min}: CardWeatherProps) {
   return (
-    <Container>
-      <Title>
+    <S.Container>
+      <S.Title>
         {title}
-      </Title>
+      </S.Title>
       <Image src={img} alt="Imagem referente a previsão do tempo"/>
       <div style={{display: "flex", gap: "16px"}}>
-        <Temperature >
+        <S.Temperature >
           {max}
-        </Temperature>
-        <Temperature gray>
+        </S.Temperature>
+        <S.Temperature gray>
           {min}
-        </Temperature>
+        </S.Temperature>
       </div>
+0
 
-
-    </Container>
+    </S.Container>
   )
 }
