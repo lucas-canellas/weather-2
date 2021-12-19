@@ -2,12 +2,12 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   background-color: #1E213A;
-  max-width: 330px;
-  max-height: 200px;
+  min-width: 330px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 22px 0;
+  flex-grow: 1;
 
 
 `

@@ -3,9 +3,13 @@ import img from './../../../public/img/Cloud-background.png'
 
 export const Container = styled.div`
 background-color: #1E213A;
-max-width: 460px;
+min-width: 460px;
 min-height: 100vh;
 padding-top: 50px;
+
+  @media(max-width: 460px) {
+    min-width: 320px;
+  }
 `
 
 export const Heading = styled.div`

@@ -5,8 +5,9 @@ type TemperatureProps = {
 }
 
 export const Container = styled.div`
+  flex-grow: 1;
   background: #1E213A;
-  max-width: min-content;
+  max-width: 135px;
   padding: 18px 22px;
 `
 

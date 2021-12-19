@@ -10,16 +10,18 @@ export type SidebarProps = {
   weather: string;
   dayWeek: string;
   date: string;
-  city: string
+  city: string;
+  toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void
 }
 
-export function Sidebar({ city, metric, date, dayWeek, degree, weather }: SidebarProps) {
+export function Sidebar({ city, metric, date, dayWeek, degree, weather, toggleDrawer }: SidebarProps) {
+
   return (
     <>
       {/* header */}
       <S.Container>
         <S.Heading>
-          <S.ButtonSearch>
+          <S.ButtonSearch onClick={toggleDrawer(true)}>
             <p>Seach for places</p>
           </S.ButtonSearch>
           <S.ButtonLocation>
@@ -42,6 +44,7 @@ export function Sidebar({ city, metric, date, dayWeek, degree, weather }: Sideba
           </S.ContainerDateCity>
         </S.DataContainer>
       </S.Container>
+
 
 
 

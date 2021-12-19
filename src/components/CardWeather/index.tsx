@@ -23,8 +23,6 @@ export function CardWeather({title, max, min}: CardWeatherProps) {
           {min}
         </S.Temperature>
       </div>
-0
-
     </S.Container>
   )
 }
