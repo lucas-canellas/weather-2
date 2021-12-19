@@ -2,8 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   display: flex;
-
-  @media(max-width: 1280px) {
+  @media (max-width: 991.98px) {
     flex-direction: column;
   }
 `
@@ -29,9 +28,9 @@ export const DegreeBox = styled.div`
 export const CardWeatherBox = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 26px;
   margin-top: 65px;
-
+  justify-content: space-around;
+  gap: 1.5rem;
 `
 
 export const TitleBox = styled.div`
@@ -47,14 +46,15 @@ export const TitleBox = styled.div`
 
 export const HightlightsBox = styled.div`
   display: grid;
+  justify-content: space-between;
   grid-template-columns: 1fr 1fr;
   margin-top: 32px;
-  gap: 48px;
+  gap: 1.5rem;
 
-  @media(max-width: 1280px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 767.98px) {
+      grid-template-columns: 1fr;
+
   }
-
 
 `
 
