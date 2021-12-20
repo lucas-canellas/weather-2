@@ -10,8 +10,6 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@mui/material": "^5.2.4",
-    "@mui/styled-engine-sc": "^5.1.0",
     "@ramonak/react-progress-bar": "^4.2.0",
     "@types/styled-components": "^5.1.18",
     "axios": "^0.24.0",

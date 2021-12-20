@@ -4,7 +4,6 @@ import img from './../../../public/img/Cloud-background.png'
 export const Container = styled.div`
 background-color: #1E213A;
 min-width: max(320px, 25%);
-padding-top: 50px;
 
 
 `
@@ -14,6 +13,7 @@ export const Heading = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 1rem;
+  padding-top: 50px;
 
 `
 

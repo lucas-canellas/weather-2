@@ -1,10 +1,18 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  width: 460px;
+  min-width: max(320px, 25%);
   background: #1E213A;
-  padding: 46px;
   height: 100vh;
+
+`
+
+export const CloseIconBox = styled.div`
+  padding: 50px 50px 25px 50px;
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+
 `
 
 export const InputBox = styled.div`
@@ -33,6 +41,7 @@ export const InputBox = styled.div`
 export const Box = styled.div`
   display: flex;
   gap: 12px;
+  justify-content: center;
 `
 
 export const Button = styled.button`
