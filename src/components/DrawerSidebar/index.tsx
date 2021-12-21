@@ -1,6 +1,5 @@
 import * as S from './styles'
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai'
-import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from 'react';
 
 export type DrawerSidebarProps = {
@@ -8,20 +7,19 @@ export type DrawerSidebarProps = {
   getWoeid: (location: any) => Promise<void>
 }
 
-type Inputs = {
-  location_data: string
-};
+
 
 export function DrawerSidebar({ toogle, getWoeid }: DrawerSidebarProps) {
   const [location, setLocation] = useState('');
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = data => {
-    setLocation(data.location_data)
-    if(location != '') {
-      getWoeid(location);
-    }
-  };
+  function handleChange(event: { target: { value: any; }; }) {
+    setLocation(event.target.value);
+  }
+
+  function handleSubmit(event: { preventDefault: () => void; }) {
+    getWoeid(location)
+    event.preventDefault()
+  }
   return (
     <>
       <S.Container>
@@ -29,12 +27,12 @@ export function DrawerSidebar({ toogle, getWoeid }: DrawerSidebarProps) {
           <AiOutlineClose fill="#FFF" size="1.5rem" onClick={() => toogle()} />
         </S.CloseIconBox>
         <S.Box>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit}>
             <S.InputBox>
               <AiOutlineSearch fill="#88869D" size="1.5rem" />
-              <input type="text" {...register("location_data")} />
+              <input type="text" onChange={handleChange} />
             </S.InputBox>
-            <S.Button type="submit">
+            <S.Button type="submit" value="Enviar">
               Search
             </S.Button>
           </form>
