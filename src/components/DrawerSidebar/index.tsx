@@ -7,8 +7,6 @@ export type DrawerSidebarProps = {
   getWoeid: (location: any) => Promise<void>
 }
 
-
-
 export function DrawerSidebar({ toogle, getWoeid }: DrawerSidebarProps) {
   const [location, setLocation] = useState('');
 
@@ -26,8 +24,8 @@ export function DrawerSidebar({ toogle, getWoeid }: DrawerSidebarProps) {
         <S.CloseIconBox>
           <AiOutlineClose fill="#FFF" size="1.5rem" onClick={() => toogle()} />
         </S.CloseIconBox>
-        <S.Box>
           <form onSubmit={handleSubmit}>
+        <S.Box>
             <S.InputBox>
               <AiOutlineSearch fill="#88869D" size="1.5rem" />
               <input type="text" onChange={handleChange} />
@@ -35,8 +33,8 @@ export function DrawerSidebar({ toogle, getWoeid }: DrawerSidebarProps) {
             <S.Button type="submit" value="Enviar">
               Search
             </S.Button>
-          </form>
         </S.Box>
+          </form>
       </S.Container>
     </>
   )
