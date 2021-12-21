@@ -16,7 +16,7 @@ export function Humidity({ percent }: HumidityProps) {
           <p>50</p>
           <p>100</p>
         </S.LabelProgressBarContainer>
-        <ProgressBar isLabelVisible={false} completed={84} width="230px" height="8px" bgColor="#FFEC65" />
+        <ProgressBar isLabelVisible={false} completed={percent} width="230px" height="8px" bgColor="#FFEC65" />
         <S.BottonLabelProgressBarContainer><p>%</p></S.BottonLabelProgressBarContainer>
       </S.Container>
     </>

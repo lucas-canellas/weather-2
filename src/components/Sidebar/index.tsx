@@ -2,9 +2,9 @@ import * as S from './styles'
 import { BiCurrentLocation } from 'react-icons/bi'
 import { MdLocationPin } from 'react-icons/md'
 import Image from 'next/dist/client/image'
-import img from './../../../public/img/Clear.png'
 import { useState } from 'react'
 import { DrawerSidebar } from '../DrawerSidebar'
+import { format } from 'fecha';
 
 export type SidebarProps = {
   degree: string;
@@ -13,14 +13,15 @@ export type SidebarProps = {
   dayWeek: string;
   date: string;
   city: string;
-
+  img: string;
+  getWoeid: (location: any) => Promise<void>
 }
 
-export function Sidebar({ city, metric, date, dayWeek, degree, weather}: SidebarProps) {
+export function Sidebar({ city, metric, date, dayWeek, degree, weather, img, getWoeid }: SidebarProps) {
   const [open, setOpen] = useState(true)
 
   function toogle() {
-    if(open === true) {
+    if (open === true) {
       setOpen(false)
     } else {
       setOpen(true)
@@ -41,27 +42,23 @@ export function Sidebar({ city, metric, date, dayWeek, degree, weather}: Sidebar
               </S.ButtonLocation>
             </S.Heading>
             <S.Hero>
-              <Image src={img} alt="Picture of the author" />
+              <Image src={require(`./../../../public/img/${img}.png`).default} alt="Picture of the author" />
             </S.Hero>
 
             <S.DataContainer>
               <S.Degree>{degree}<span>{metric}</span></S.Degree>
               <S.WeatherState>{weather}</S.WeatherState>
-              <S.Date>{dayWeek} • {date}</S.Date>
+              <S.Date>Today{format(new Date(date), ' • ddd, D MMM')}</S.Date>
               <S.ContainerDateCity>
                 <MdLocationPin fill="#88869D" size="1.5rem" />
                 <S.City>{city}</S.City>
               </S.ContainerDateCity>
             </S.DataContainer>
           </>
-        ):
-          <DrawerSidebar toogle={toogle} />
+        ) :
+          <DrawerSidebar toogle={toogle} getWoeid={getWoeid} />
         }
       </S.Container>
-
-
-
-
     </>
   )
 }

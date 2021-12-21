@@ -7,16 +7,19 @@ import { Humidity } from '../../components/Humidity'
 import { HighlightCard } from '../../components/HighlightCard'
 import React, { useEffect, useState } from 'react'
 import api from './../../services/api'
+import { format } from 'fecha'
+
 
 export function Home1() {
 
   const [woeid, setWoeid] = useState(44418)
-  const [data, setData] = useState()
+  const [data, setData] = useState<any>()
+  const [metric, setMetric] = useState('ºC')
 
 
-  async function getWoeid() {
+  async function getWoeid(location: any) {
     try {
-      await api.get('location/search/?query=london')
+      await api.get(`location/search/?query=${location}`)
         .then(response => setWoeid(response.data[0].woeid)
         )
     } catch (err) {
@@ -27,7 +30,7 @@ export function Home1() {
   useEffect(() => {
     api.get(`/api/location/${woeid}/`)
       .then(response => setData(response.data),
-      )
+    )
   }, [woeid])
 
   return (
@@ -35,7 +38,7 @@ export function Home1() {
       {
         data ?
           <S.Container>
-            <Sidebar degree="15" metric="ºC" weather="Shower" dayWeek="Today" date="Fri, 5 jun" city={data['title']} />
+            <Sidebar getWoeid={getWoeid} degree={Math.trunc(data['consolidated_weather'][0].the_temp).toString()} metric={metric} weather={data['consolidated_weather'][0].weather_state_name} dayWeek="Today" date={data['consolidated_weather'][0].applicable_date} city={data['title']} img={data['consolidated_weather'][0].weather_state_abbr} />
             <S.Content>
               <S.ContentContainer>
                 <S.DegreeBox>
@@ -47,18 +50,16 @@ export function Home1() {
                   </Degree>
                 </S.DegreeBox>
                 <S.CardWeatherBox>
-                  <CardWeather title="Tomorrow" max="16ºC" min="12ºC" />
-                  <CardWeather title="Tomorrow" max="16ºC" min="12ºC" />
-                  <CardWeather title="Tomorrow" max="16ºC" min="12ºC" />
-                  <CardWeather title="Tomorrow" max="16ºC" min="12ºC" />
-                  <CardWeather title="Tomorrow" max="16ºC" min="12ºC" />
+                  {data.consolidated_weather.slice(1, 6).map((weather: any) =>
+                    <CardWeather key={weather.id} title={format(new Date(weather.applicable_date), 'ddd, D MMM')} max={`${Math.round(weather.max_temp)}ºC`} min={`${Math.round(weather.min_temp)}ºC`} img={weather.weather_state_abbr} />
+                  )}
                 </S.CardWeatherBox>
                 <S.TitleBox><h1>Today’s Hightlights </h1></S.TitleBox>
                 <S.HightlightsBox>
-                  <WindStatus speed="7" direction_compass="wsw" />
-                  <Humidity percent="84" />
-                  <HighlightCard title="Visibility" value="6,4" metric="miles" />
-                  <HighlightCard title="Air Pressure" value="998" metric="mb" />
+                  <WindStatus speed={Math.trunc(data['consolidated_weather'][0].wind_speed).toString()} direction_compass={(data['consolidated_weather'][0].wind_direction_compass)} />
+                  <Humidity percent={Math.trunc(data['consolidated_weather'][0].humidity).toString()} />
+                  <HighlightCard title="Visibility" value={Math.trunc(data['consolidated_weather'][0].visibility).toString()} metric="miles" />
+                  <HighlightCard title="Air Pressure" value={Math.trunc(data['consolidated_weather'][0].air_pressure).toString()} metric="mb" />
                 </S.HightlightsBox>
                 <S.FooterBox><p>created by <span>username</span> - devChallenges.io</p></S.FooterBox>
               </S.ContentContainer>

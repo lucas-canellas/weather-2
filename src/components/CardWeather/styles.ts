@@ -5,6 +5,9 @@ type TemperatureProps = {
 }
 
 export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   flex-grow: 1;
   background: #1E213A;
   max-width: 135px;
@@ -17,6 +20,7 @@ export const Title = styled.p`
   font-size: 16px;
   line-height: 19px;
   margin-bottom: 10px;
+  white-space: nowrap;
 `
 
 

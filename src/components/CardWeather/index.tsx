@@ -1,20 +1,20 @@
 import * as S from "./styles";
 import Image from 'next/image'
-import img from './../../../public/img/Clear.png'
 
 type CardWeatherProps = {
   title: string
   max: string
   min: string
+  img: string
 }
 
-export function CardWeather({title, max, min}: CardWeatherProps) {
+export function CardWeather({title, max, min, img}: CardWeatherProps) {
   return (
     <S.Container>
       <S.Title>
         {title}
       </S.Title>
-      <Image src={img} alt="Imagem referente a previsão do tempo"/>
+      <Image src={require(`./../../../public/img/${img}.png`).default} alt="Imagem referente a previsão do tempo"/>
       <div style={{display: "flex", gap: "16px"}}>
         <S.Temperature >
           {max}
