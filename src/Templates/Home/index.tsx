@@ -16,6 +16,26 @@ export function Home1() {
   const [data, setData] = useState<any>()
   const [metric, setMetric] = useState('ºC')
 
+  const [lat, setLat] = useState<number>(-22.7430026);
+  const [lng, setLng] = useState<number>(-42.8503287);
+  const [status, setStatus] = useState('');
+
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      setStatus('Geolocation is not supported by your browser');
+    } else {
+      setStatus('Locating...');
+      navigator.geolocation.getCurrentPosition((position) => {
+        setStatus('');
+        setLat(position.coords.latitude);
+        setLng(position.coords.longitude);
+      }, () => {
+        setStatus('Unable to retrieve your location');
+      });
+    }
+  }
+
+
 
   async function getWoeid(location: any) {
     try {
@@ -42,7 +62,7 @@ export function Home1() {
             <S.Content>
               <S.ContentContainer>
                 <S.DegreeBox>
-                  <Degree background="#E7E7EB" color="#110E3C">
+                  <Degree background="#E7E7EB" color="#110E3C" >
                     ºC
                   </Degree>
                   <Degree background="#585676" color="#E7E7EB">
@@ -68,6 +88,11 @@ export function Home1() {
           :
           ''
       }
+      <button onClick={getLocation}>Get Location</button>
+      <h1>Coordinates</h1>
+      <p>{status}</p>
+      {lat && <p>Latitude: {lat}</p>}
+      {lng && <p>Longitude: {lng}</p>}
     </>
   )
 }
