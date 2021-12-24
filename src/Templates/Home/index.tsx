@@ -81,7 +81,7 @@ export function Home1() {
                   <HighlightCard title="Visibility" value={Math.trunc(data['consolidated_weather'][0].visibility).toString()} metric="miles" />
                   <HighlightCard title="Air Pressure" value={Math.trunc(data['consolidated_weather'][0].air_pressure).toString()} metric="mb" />
                 </S.HightlightsBox>
-                <S.FooterBox><p>created by <span>username</span> - devChallenges.io</p></S.FooterBox>
+                <S.FooterBox><p>created by <span>lucas-canellas</span> - devChallenges.io</p></S.FooterBox>
               </S.ContentContainer>
             </S.Content>
           </S.Container>

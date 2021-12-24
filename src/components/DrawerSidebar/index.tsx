@@ -11,12 +11,13 @@ export function DrawerSidebar({ toogle, getWoeid }: DrawerSidebarProps) {
   const [location, setLocation] = useState('');
 
   function handleChange(event: { target: { value: any; }; }) {
-    setLocation(event.target.value);
+    setLocation(event.target.value);    
   }
 
   function handleSubmit(event: { preventDefault: () => void; }) {
-    getWoeid(location)
     event.preventDefault()
+    getWoeid(location)    
+    toogle();
   }
   return (
     <>
