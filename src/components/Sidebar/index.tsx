@@ -36,6 +36,8 @@ export function Sidebar({ getNameLocation, location, setLocation,getLocation, ci
 
   async function execAll() {
     getLocation()
+    console.log(location)
+
     await getNameLocation()
   }
 

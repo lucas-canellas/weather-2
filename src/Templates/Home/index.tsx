@@ -15,7 +15,6 @@ export function Home1() {
   const [woeid, setWoeid] = useState(44418)
   const [data, setData] = useState<any>()
   const [metric, setMetric] = useState('ºC')
-  const [temp, setTemp] = useState('')
   const [location, setLocation] = useState('');
   const [lat, setLat] = useState<number>(-22.7430026);
   const [lng, setLng] = useState<number>(-42.8503287);
@@ -38,9 +37,13 @@ export function Home1() {
 
   async function getNameLocation() {
     try {
-      const response = await api.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
-      const result = await api.get(`location/search/?query=${response.data.address.state}`)
+
+      const response = await api.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&format=json&apiKey=03ecc53f4b264de7ab6a16f681648e40`)
+      console.log(response)
+      const result = await api.get(`location/search/?query=${response.data.results[0].state}`)
+      console.log(result)
       setWoeid(result.data[0].woeid);
+      console.log(woeid)
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +69,6 @@ export function Home1() {
     setMetric('ºC')
 
   }
-
 
   useEffect(() => {
     api.get(`/api/location/${woeid}/`)
