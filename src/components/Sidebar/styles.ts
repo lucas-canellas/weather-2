@@ -89,6 +89,12 @@ export const ContainerDateCity = styled.div`
   justify-content: center;
   margin-top: 32px;
   gap: .4rem;
+
+    @media (max-width: 767.98px) {
+      grid-template-columns: 1fr;
+      margin-bottom: 32px;
+
+  }
 `
 
 export const Date = styled.p`
