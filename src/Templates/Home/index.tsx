@@ -15,7 +15,8 @@ export function Home1() {
   const [woeid, setWoeid] = useState(44418)
   const [data, setData] = useState<any>()
   const [metric, setMetric] = useState('ºC')
-
+  const [temp, setTemp] = useState('')
+  const [location, setLocation] = useState('');
   const [lat, setLat] = useState<number>(-22.7430026);
   const [lng, setLng] = useState<number>(-42.8503287);
   const [status, setStatus] = useState('');
@@ -35,7 +36,15 @@ export function Home1() {
     }
   }
 
-
+  async function getNameLocation() {
+    try {
+      const response = await api.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
+      const result = await api.get(`location/search/?query=${response.data.address.state}`)
+      setWoeid(result.data[0].woeid);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   async function getWoeid(location: any) {
     try {
@@ -46,6 +55,18 @@ export function Home1() {
       console.log(err);
     }
   }
+
+  function celsius2Fahrenheit() {
+
+    setMetric('ºF')
+  }
+
+  function Fahrenheit2Celsius() {
+
+    setMetric('ºC')
+
+  }
+
 
   useEffect(() => {
     api.get(`/api/location/${woeid}/`)
@@ -58,25 +79,30 @@ export function Home1() {
       {
         data ?
           <S.Container>
-            <Sidebar getWoeid={getWoeid} degree={Math.trunc(data['consolidated_weather'][0].the_temp).toString()} metric={metric} weather={data['consolidated_weather'][0].weather_state_name} dayWeek="Today" date={data['consolidated_weather'][0].applicable_date} city={data['title']} img={data['consolidated_weather'][0].weather_state_abbr} />
+            <Sidebar getNameLocation={getNameLocation} location={location} setLocation={setLocation} getLocation={getLocation} getWoeid={getWoeid} degree={metric === 'ºC' ? Math.trunc(data['consolidated_weather'][0].the_temp).toString() : ((Math.trunc(data['consolidated_weather'][0].the_temp) * 9 / 5) + 32).toString() } metric={metric} weather={data['consolidated_weather'][0].weather_state_name} dayWeek="Today" date={data['consolidated_weather'][0].applicable_date} city={data['title']} img={data['consolidated_weather'][0].weather_state_abbr} />
             <S.Content>
               <S.ContentContainer>
                 <S.DegreeBox>
-                  <Degree background="#E7E7EB" color="#110E3C" >
-                    ºC
-                  </Degree>
-                  <Degree background="#585676" color="#E7E7EB">
-                    ºF
-                  </Degree>
+                  <div onClick={Fahrenheit2Celsius}>
+                    <Degree background="#E7E7EB" color="#110E3C"  >
+                      ºC
+                    </Degree>
+                  </div>
+                  <div onClick={celsius2Fahrenheit}>
+                    <Degree background="#585676" color="#E7E7EB">
+                      ºF
+                    </Degree>
+                  </div>
                 </S.DegreeBox>
                 <S.CardWeatherBox>
+                  {/* metric === 'ºC' ? Math.round(weather.max_temp) : ((Math.round(weather.max_temp)) * 9 / 5) + 32).toString() */}
                   {data.consolidated_weather.slice(1, 6).map((weather: any) =>
-                    <CardWeather key={weather.id} title={format(new Date(weather.applicable_date), 'ddd, D MMM')} max={`${Math.round(weather.max_temp)}ºC`} min={`${Math.round(weather.min_temp)}ºC`} img={weather.weather_state_abbr} />
+                    <CardWeather key={weather.id} title={format(new Date(weather.applicable_date), 'ddd, D MMM')} max={metric === 'ºC' ? Math.round(weather.max_temp).toString() : (((Math.round(weather.max_temp)) * 9 / 5) + 32).toString()} min={metric === 'ºC' ? Math.round(weather.min_temp).toString() : (((Math.round(weather.min_temp)) * 9 / 5) + 32).toString()} img={weather.weather_state_abbr} metric={metric} />
                   )}
                 </S.CardWeatherBox>
                 <S.TitleBox><h1>Today’s Hightlights </h1></S.TitleBox>
                 <S.HightlightsBox>
-                  <WindStatus speed={Math.trunc(data['consolidated_weather'][0].wind_speed).toString()} direction_compass={(data['consolidated_weather'][0].wind_direction_compass)} />
+                  <WindStatus wind_direction={(data['consolidated_weather'][0].wind_direction)} speed={Math.trunc(data['consolidated_weather'][0].wind_speed).toString()} direction_compass={(data['consolidated_weather'][0].wind_direction_compass)} />
                   <Humidity percent={Math.trunc(data['consolidated_weather'][0].humidity).toString()} />
                   <HighlightCard title="Visibility" value={Math.trunc(data['consolidated_weather'][0].visibility).toString()} metric="miles" />
                   <HighlightCard title="Air Pressure" value={Math.trunc(data['consolidated_weather'][0].air_pressure).toString()} metric="mb" />
@@ -88,11 +114,6 @@ export function Home1() {
           :
           ''
       }
-      <button onClick={getLocation}>Get Location</button>
-      <h1>Coordinates</h1>
-      <p>{status}</p>
-      {lat && <p>Latitude: {lat}</p>}
-      {lng && <p>Longitude: {lng}</p>}
     </>
   )
 }

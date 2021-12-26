@@ -15,10 +15,16 @@ export type SidebarProps = {
   city: string;
   img: string;
   getWoeid: (location: any) => Promise<void>
+  getLocation: () => void
+  location: string
+  setLocation: React.Dispatch<React.SetStateAction<string>>
+  getNameLocation: () => Promise<void>
+
 }
 
-export function Sidebar({ city, metric, date, dayWeek, degree, weather, img, getWoeid }: SidebarProps) {
+export function Sidebar({ getNameLocation, location, setLocation,getLocation, city, metric, date, degree, weather, img, getWoeid }: SidebarProps) {
   const [open, setOpen] = useState(true)
+
 
   function toogle() {
     if (open === true) {
@@ -27,6 +33,12 @@ export function Sidebar({ city, metric, date, dayWeek, degree, weather, img, get
       setOpen(true)
     }
   }
+
+  async function execAll() {
+    getLocation()
+    await getNameLocation()
+  }
+
   return (
     <>
 
@@ -38,7 +50,7 @@ export function Sidebar({ city, metric, date, dayWeek, degree, weather, img, get
                 <p>Seach for places</p>
               </S.ButtonSearch>
               <S.ButtonLocation>
-                <BiCurrentLocation fill="#E7E7EB" size="22px" />
+                <BiCurrentLocation fill="#E7E7EB" size="22px" onClick={execAll} />
               </S.ButtonLocation>
             </S.Heading>
             <S.Hero>
@@ -56,7 +68,7 @@ export function Sidebar({ city, metric, date, dayWeek, degree, weather, img, get
             </S.DataContainer>
           </>
         ) :
-          <DrawerSidebar toogle={toogle} getWoeid={getWoeid} />
+          <DrawerSidebar location={location} setLocation={setLocation} toogle={toogle} getWoeid={getWoeid} />
         }
       </S.Container>
     </>

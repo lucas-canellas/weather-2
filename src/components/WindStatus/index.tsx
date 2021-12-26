@@ -1,12 +1,13 @@
 import * as S from './styles'
-import { RiNavigationFill} from 'react-icons/ri'
+import { MdNavigation} from 'react-icons/md'
 
 export type WindStatusProps = {
   speed: string
   direction_compass: string
+  wind_direction: string
 }
 
-export function WindStatus({direction_compass,speed}: WindStatusProps) {
+export function WindStatus({ direction_compass, speed, wind_direction}: WindStatusProps) {
   return (
     <>
       <S.Container>
@@ -14,7 +15,7 @@ export function WindStatus({direction_compass,speed}: WindStatusProps) {
         <S.Speed>{speed}<span>mph</span></S.Speed>
         <S.SpeedDirectionContainer>
           <S.SpeedDirectionIcon>
-            <RiNavigationFill fill="#FFF"/>
+            <MdNavigation fill="#FFF" style={{ transform: `rotate(${wind_direction}deg)` }}/>
           </S.SpeedDirectionIcon>
           <S.SpeedDirectionText>{direction_compass}</S.SpeedDirectionText>
         </S.SpeedDirectionContainer>

@@ -5,18 +5,19 @@ import { useState } from 'react';
 export type DrawerSidebarProps = {
   toogle: () => void
   getWoeid: (location: any) => Promise<void>
+  location: string
+  setLocation: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function DrawerSidebar({ toogle, getWoeid }: DrawerSidebarProps) {
-  const [location, setLocation] = useState('');
+export function DrawerSidebar({ toogle, getWoeid, location, setLocation }: DrawerSidebarProps) {
 
   function handleChange(event: { target: { value: any; }; }) {
-    setLocation(event.target.value);    
+    setLocation(event.target.value);
   }
 
   function handleSubmit(event: { preventDefault: () => void; }) {
     event.preventDefault()
-    getWoeid(location)    
+    getWoeid(location)
     toogle();
   }
   return (

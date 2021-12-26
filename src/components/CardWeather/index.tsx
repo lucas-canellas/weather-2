@@ -6,9 +6,10 @@ type CardWeatherProps = {
   max: string
   min: string
   img: string
+  metric: string
 }
 
-export function CardWeather({title, max, min, img}: CardWeatherProps) {
+export function CardWeather({title, max, min, img, metric}: CardWeatherProps) {
   return (
     <S.Container>
       <S.Title>
@@ -17,10 +18,10 @@ export function CardWeather({title, max, min, img}: CardWeatherProps) {
       <Image src={require(`./../../../public/img/${img}.png`).default} alt="Imagem referente a previsão do tempo"/>
       <div style={{display: "flex", gap: "16px"}}>
         <S.Temperature >
-          {max}
+          {max}{metric}
         </S.Temperature>
         <S.Temperature gray>
-          {min}
+          {min}{metric}
         </S.Temperature>
       </div>
     </S.Container>
