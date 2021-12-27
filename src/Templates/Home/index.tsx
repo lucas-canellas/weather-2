@@ -39,11 +39,8 @@ export function Home1() {
     try {
 
       const response = await api.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&format=json&apiKey=03ecc53f4b264de7ab6a16f681648e40`)
-      console.log(response)
       const result = await api.get(`location/search/?query=${response.data.results[0].state}`)
-      console.log(result)
       setWoeid(result.data[0].woeid);
-      console.log(woeid)
     } catch (err) {
       console.log(err);
     }
