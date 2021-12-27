@@ -37,7 +37,6 @@ export function Home1() {
 
   async function getNameLocation() {
     try {
-
       const response = await api.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&format=json&apiKey=03ecc53f4b264de7ab6a16f681648e40`)
       const result = await api.get(`location/search/?query=${response.data.results[0].state}`)
       setWoeid(result.data[0].woeid);
@@ -57,12 +56,10 @@ export function Home1() {
   }
 
   function celsius2Fahrenheit() {
-
     setMetric('ºF')
   }
 
   function Fahrenheit2Celsius() {
-
     setMetric('ºC')
 
   }
